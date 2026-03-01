@@ -27,3 +27,5 @@ flatpak override tv.kodi.Kodi --talk-name=org.freedesktop.Flatpak
 flatpak override net.lutris.Lutris --talk-name=org.freedesktop.Flatpak
 
 reinstall_amd.sh - Open with text editor run with copy paste in sections and it will work!
+sudo flatpak install flathub com.google.AndroidStudio
+PPSSPP Flatpak- PSP Flatpak (name) - Application org.ppsspp.PPSSPP
