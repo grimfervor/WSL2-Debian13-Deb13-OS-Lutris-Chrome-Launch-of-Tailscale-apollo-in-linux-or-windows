@@ -1,12 +1,12 @@
+https://localhost:47990 - Sunsine UI
 
+# Run as Administrator - This does everything automatically
+irm https://sunshine-aio.com/script.ps1 | iex
 
-https://192.168.1.66:7000
+https://github.com/LizardByte/Sunshine/releases! 
 
-https://github.com/LizardByte/Sunshine/releases
-
-Attatched is for my quick setup of a game downloader in android!! 
-Included in reinstall.sh!
-IT Streams your Android Emulator To One Of Your New Phones Without SD!
+Streams your PC Lutris To One Of Your New Phones Without SD!
+wsl.exe -d Debian -u grimf -- flatpak run net.lutris.Lutris
 
 chmod +x reinstall.sh
 ./reinstall.sh
@@ -26,6 +26,4 @@ flatpak override tv.kodi.Kodi --talk-name=org.freedesktop.Flatpak
 # Allow Lutris to see and run other Flatpaks
 flatpak override net.lutris.Lutris --talk-name=org.freedesktop.Flatpak
 
-reinstall_amd.sh - Open with text editor run with copy paste in sections and it will work!
-sudo flatpak install flathub com.google.AndroidStudio
-PPSSPP Flatpak- PSP Flatpak (name) - Application org.ppsspp.PPSSPP
+reinstallwslryu.sh - Open with text editor run with copy paste in sections and it will work!
