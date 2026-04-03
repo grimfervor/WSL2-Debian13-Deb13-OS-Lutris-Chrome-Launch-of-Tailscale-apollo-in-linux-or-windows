@@ -1,0 +1,22 @@
+Gemini said
+Setting up Playnite (specifically for Windows apps) with Sunshine is the best way to get a "console-like" experience on your TV or handheld. You have two main ways to do this: the Simple Method (launching Playnite itself as the menu) or the Sync Method (exporting individual games to the Sunshine menu).
+
+Method 1: The Simple "Master Launcher" (Recommended)
+Instead of adding every game to Sunshine, you add Playnite in Fullscreen Mode. When you select "Playnite" in Moonlight, it opens your full library, and you navigate it with your controller.
+
+Open your Sunshine Web UI (usually https://localhost:47990).
+
+Go to the Applications tab and click Add New.
+
+Fill in these specific fields:
+
+Application Name: Playnite
+
+Command: "C:\Users\grimf\AppData\Local\Playnite\Playnite.FullscreenApp.exe" --hidesplashscreen
+(Note: If you installed Playnite elsewhere, use that path. The --hidesplashscreen flag makes the transition smoother.)
+
+Working Directory: C:\Users\YourName\AppData\Local\Playnite\
+
+Cover Art: Go to , download a Playnite cover (600x900), and paste the file path into the Image Path field.
+
+Click Save.

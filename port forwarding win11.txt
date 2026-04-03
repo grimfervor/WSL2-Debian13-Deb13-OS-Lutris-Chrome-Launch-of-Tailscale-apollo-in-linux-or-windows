@@ -1,0 +1,49 @@
+Port forwarding on Windows 11 is a two-part process. First, you have to tell the Windows Firewall to stop blocking the specific "door" (port) you want to use. Second, you usually need to tell your router to send traffic from the internet specifically to your computer.
+
+Here is how to handle the Windows side of things:
+
+1. Open the Port in Windows Firewall
+Even if your router sends data to your PC, Windows will block it by default unless you create an "Inbound Rule."
+
+Press the Windows Key, type Windows Defender Firewall, and hit Enter.
+
+Click Advanced settings on the left sidebar.
+
+In the new window, click Inbound Rules (top left), then click New Rule... (top right).
+
+Rule Type: Select Port and click Next.
+
+Protocol and Ports: Choose TCP or UDP (depending on what your application needs) and type the port number in Specific local ports (e.g., 25565 for Minecraft).
+
+Action: Select Allow the connection.
+
+Profile: Keep all three checked (Domain, Private, Public) unless you have a specific reason not to.
+
+Name: Give it a clear name like "Minecraft Server" or "Web Server" and click Finish.
+
+2. Set a Static IP Address
+Before touching your router, ensure your PC’s address doesn't change. If your router forwards a port to 192.168.1.15 and your PC moves to .16 tomorrow, the link breaks.
+
+Go to Settings > Network & internet > Ethernet (or Wi-Fi).
+
+Click IP assignment and change it from Automatic (DHCP) to Manual.
+
+Toggle IPv4 to On.
+
+Enter an IP address (like 192.168.1.50), the Subnet mask (usually 255.255.255.0), and the Gateway (your router’s IP, often 192.168.1.1).
+
+3. The Router Side (The "True" Forwarding)
+This happens in your browser, not in Windows settings.
+
+Access your router: Type your Gateway IP (e.g., 192.168.1.1) into your browser.
+
+Find Port Forwarding: Look for a tab labeled "Port Forwarding," "NAT," or "Virtual Server."
+
+Create the Link: You will enter the External Port (the port people use to find you), the Internal Port (the port you opened in the firewall), and the Internal IP (the static IP you just set for your PC).
+
+Common Troubleshooting
+Double NAT: If you have a router plugged into a modem/router combo from your ISP, you might have two "walls" to bypass.
+
+ISP CGNAT: Some internet providers don't give you a unique public IP. If your router’s "WAN IP" doesn't match what you see on a site like WhatIsMyIP, port forwarding might not work without a VPN or tool like Tailscale.
+
+Would you like me to help you find the specific default login or gateway for your specific router model?

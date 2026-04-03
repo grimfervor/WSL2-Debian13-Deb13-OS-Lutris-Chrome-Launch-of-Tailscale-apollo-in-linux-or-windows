@@ -10,7 +10,6 @@ echo "Target: Universal Hardware | Lutris 0.5.22"
 echo "------------------------------------------------"
 
 # 1. Pre-flight & Core Firmware
-# Installing 'nvidia-detect' and 'pciutils' to identify hardware
 sudo apt update && sudo apt install -y ca-certificates wget curl gnupg2 pciutils firmware-linux nvidia-detect
 sudo update-ca-certificates
 
@@ -25,7 +24,7 @@ deb http://deb.debian.org/debian/ trixie-updates main contrib non-free non-free-
 deb http://security.debian.org/debian-security trixie-security main contrib non-free non-free-firmware
 EOT
 
-# WineHQ Key (Staging branch)
+# WineHQ Key
 sudo mkdir -pm755 /etc/apt/keyrings
 sudo wget --no-check-certificate -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
 
@@ -44,20 +43,19 @@ sudo apt update
 echo "Analyzing GPU hardware..."
 if lspci | grep -i nvidia > /dev/null; then
     echo "NVIDIA GPU detected. Installing proprietary drivers & 32-bit GLX..."
-    # 'libgl1-nvidia-glvnd-glx:i386' is mandatory for Steam/Lutris on NVIDIA
     sudo apt install -y nvidia-driver libgl1-nvidia-glvnd-glx:i386 nvidia-vulkan-icd nvidia-vulkan-icd:i386
 else
     echo "Using Open Source / Intel / AMD stack."
 fi
 
-# 4. Core Software & Emulator Installation
-# Includes 'intel-media-va-driver-non-free' for Intel QuickSync/HD Graphics
+# 4. Core Software & Emulator Installation (Added AntiMicroX)
 sudo DEBIAN_FRONTEND=noninteractive apt install -y \
     fuse libfuse2t64 dbus-x11 xdg-desktop-portal-gtk \
     libgl1-mesa-dri libgl1-mesa-dri:i386 \
     mesa-vulkan-drivers mesa-vulkan-drivers:i386 \
     intel-media-va-driver-non-free \
     winehq-staging retroarch dolphin-emu kodi mupen64plus-ui-console \
+    antimicrox \
     zram-tools python3-pil python3-lxml git usbutils \
     pipewire-audio-client-libraries libpulse0 alsa-utils pulseaudio-utils
 
@@ -73,13 +71,11 @@ mkdir -p ~/Applications
 [ -f sunshine.AppImage ] && mv sunshine.AppImage ~/Applications/
 chmod +x ~/Applications/sunshine.AppImage
 
-# Hardware Permissions (Critical for native Sunshine performance)
 sudo setcap cap_sys_admin+p ~/Applications/sunshine.AppImage
 echo 'KERNEL=="uinput", SUBSYSTEM=="misc", OPTIONS+="static_node=uinput", TAG+="uaccess"' | \
 sudo tee /etc/udev/rules.d/60-sunshine.rules
 sudo usermod -aG input,video,render $USER
 
-# Register Sunshine
 ~/Applications/sunshine.AppImage --install
 
 # 7. Other AppImages
@@ -89,6 +85,7 @@ echo "Organizing Emulators..."
 chmod +x ~/Applications/*.AppImage
 
 # 8. USB Tools (Ventoy for Local PC)
+# Note: Ventoy must be run from the PC that the user is putting ISOs on.
 echo "Downloading latest Ventoy for Linux..."
 mkdir -p ~/usb-tools && cd ~/usb-tools
 VENTOY_URL=$(curl -s https://api.github.com/repos/ventoy/Ventoy/releases/latest | grep "browser_download_url.*linux.tar.gz" | cut -d '"' -f 4)

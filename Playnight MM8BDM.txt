@@ -1,0 +1,32 @@
+The tool you are referring to, LutrisToSunshine, is primarily designed for Linux. Since Lutris itself is a Linux-native game manager, the script relies on Linux-specific paths (like ~/.config/sunshine) and commands to function.
+
+However, if you are on Windows and want a similar automated experience to import your non-Steam games into Sunshine, you should use Playnite instead of Lutris.
+
+Why use Playnite on Windows?
+Playnite is the "Lutris of Windows." It has a dedicated Sunshine plugin that does exactly what the Git script does for Linux: it automatically syncs your entire game library (Epic, GOG, Amazon, Emulators) into Sunshine with cover art and launch arguments.
+
+How to set up the equivalent on Windows:
+Install Playnite: Download it from playnite.link.
+
+Install the Sunshine Export Plugin:
+
+Open Playnite and press F11 (or go to the Settings icon).
+
+Go to Add-ons > Browse > Generic.
+
+Look for the Sunshine App Export (or similar "Sunshine" integration) and install it.
+
+Configure the Plugin: * It will ask for your Sunshine Local IP (usually 127.0.0.1) and your Web UI Credentials.
+
+Once connected, you can select which games from Playnite you want to "Push" to Sunshine.
+
+If you absolutely want to try the .git script on Windows (Advanced/Not Recommended):
+If you are determined to use the LutrisToSunshine Python script (perhaps via WSL or a manual port), it is extremely difficult because:
+
+Pathing: The script looks for /home/user/.config/sunshine/apps.json. On Windows, Sunshine stores this in C:\Program Files\Sunshine\config\apps.json (and it requires Admin permissions to write to).
+
+Library Compatibility: The script searches for a Lutris database file that simply doesn't exist on Windows.
+
+The Peer Advice: Save yourself the headache and switch to Playnite. It’s the industry standard for what you’re trying to do on Windows, and the Sunshine integration is much more stable.
+
+Would you like me to walk you through setting up a specific game launcher in Playnite so it shows up in Sunshine?

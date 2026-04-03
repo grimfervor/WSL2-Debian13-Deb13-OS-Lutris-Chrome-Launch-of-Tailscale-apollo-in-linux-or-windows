@@ -1,0 +1,78 @@
+Setting up Kodi inside a Debian WSL environment to feed into Playnite is an interesting "Frankenstein" project. Since WSL doesn't naturally behave like a secondary monitor, you’ll need to bridge the gap between Linux's display output and Windows' interface.
+
+Here is the step-by-step guide to getting this running.
+
+1. Prepare Debian WSL
+First, ensure your Debian instance is up to date and has the necessary drivers for GUI support (WSLg).
+
+Open your Debian terminal.
+
+Update your packages:
+
+Bash
+sudo apt update && sudo apt upgrade -y
+Install Kodi:
+
+Bash
+sudo apt install kodi -y
+2. Configure Graphics & Sound
+For Kodi to run smoothly, WSL needs to access your GPU.
+
+GPU Acceleration: Ensure you have the Windows GPU Sandbox driver installed (usually automatic with Windows 11).
+
+Audio: WSLg handles audio via PulseAudio automatically, but if you hear nothing, try installing the following:
+
+Bash
+sudo apt install libasound2 alsa-utils -y
+3. Creating the "Bridge" Script
+Playnite needs an .exe or a .bat file to trigger the launch. Since Kodi is inside Linux, we will create a small script in Windows to call it.
+
+Open Notepad.
+
+Paste the following:
+
+Code snippet
+@echo off
+wsl -d Debian kodi --fullscreen
+Save this as launch_kodi.bat in a folder you won't delete (e.g., C:\Scripts\).
+
+4. Integrate with Playnite
+Now, let’s make it look pretty in your library.
+
+Open Playnite.
+
+Click Add Game > Manual.
+
+In the General tab:
+
+Name: Kodi (WSL)
+
+In the Installation tab:
+
+Set the Installation Directory to your script folder.
+
+In the Actions tab:
+
+Click Add Action.
+
+Type: Executable.
+
+Path: Select your launch_kodi.bat.
+
+(Optional) Download a Kodi icon and background image to make it fit the Playnite aesthetic.
+
+Important Considerations
+Why use WSL for Kodi?
+To be honest, it’s a bit like taking the scenic route. Since a native Windows version of Kodi exists, you might run into input lag or HDR limitations in WSL that the native app doesn't have.
+
+Tip: If you encounter "Permission Denied" errors when Kodi tries to access hardware, try adding your user to the video and audio groups:
+sudo usermod -a -G video,audio,render $USER
+
+Performance Tweak
+If the window looks blurry or the scaling is off, you can create a .wslconfig file in your Windows User folder (%USERPROFILE%) to allocate more memory to the Linux kernel:
+
+Ini, TOML
+[wsl2]
+memory=4GB 
+processors=4
+Is there a specific reason you're opting for the Debian/WSL setup instead of the native Windows Kodi app?

@@ -1,0 +1,47 @@
+Gemini said
+Streaming Lutris through Sunshine (especially from a Windows host via WSL) is a fantastic way to access Linux-specific runners and emulators on other devices like a Steam Deck or a TV.
+
+Since Sunshine is likely running on your Windows host, you need to configure it to "reach into" WSL to trigger Lutris.
+
+1. Configure the Launch Command
+In your Sunshine Web UI (https://localhost:47990), go to the Applications tab and click Add New. Use the following settings:
+
+Application Name: Lutris (WSL)
+
+Command: "DISPLAY=:0 C:\Windows\System32\wsl.exe -d debian gui-launch lutris"
+(Replace <DistroName> with your actual distro, e.g., Ubuntu).
+
+Detached Commands (Optional): If you want to launch a specific game directly instead of the whole Lutris UI, use:
+C:\Windows\System32\wsl.exe -d <DistroName> lutris lutris:rungame/<game-slug>
+
+Note on gui-launch: If your WSL setup doesn't automatically handle the GUI environment, you may need to prefix the command with DISPLAY=:0 or use a helper like wslg commands to ensure the window appears.
+
+2. Handling Audio (The Common Gotcha)
+Streaming from WSL to Sunshine often results in no audio because WSL uses PulseAudio/Pipewire, while Sunshine on Windows listens to the Windows Default Output.
+
+The Fix: Ensure your WSL is configured to output audio to the Windows host. Most modern WSLg setups do this automatically via a RDP-based bridge.
+
+If audio is missing, check if pulseaudio is running in WSL and directed to the host's IP or the WSL gateway.
+
+3. Automated Setup (LutrisToSunshine)
+If you have a massive library in Lutris and don't want to add games one by one, there is a community tool called LutrisToSunshine.
+
+This script scans your Lutris database and automatically generates the apps.json entries for Sunshine.
+
+It can even pull cover art from SteamGridDB so your Moonlight menu looks professional.
+
+4. Performance Tuning
+GPU Acceleration: Ensure you have the vGPU drivers installed on Windows (Nvidia/AMD/Intel) so WSL can use hardware encoding.
+
+Resolution: In the Sunshine app settings, you can add "Prep Commands" to change your Windows resolution to match your streaming client (e.g., 1280x800 for Steam Deck) before Lutris opens.
+
+Summary Table for Sunshine Config
+Field	Value
+Command	wsl.exe -d Ubuntu lutris
+Working Dir	C:\Windows\System32
+Image Path	(Link to a Lutris .png icon)
+Would you like me to find the specific terminal command to check your WSL distro name or help you set up a resolution-matching script?
+
+
+
+
