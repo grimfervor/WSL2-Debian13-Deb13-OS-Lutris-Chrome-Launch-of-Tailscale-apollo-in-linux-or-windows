@@ -1,0 +1,298 @@
+
+Conversation with Gemini
+You said
+how can i add playnight to apollo
+
+Gemini said
+Adding Playnite to Apollo (the Sunshine fork for game streaming) is a great way to get a console-like experience on your handheld or TV. Since Apollo handles virtual displays natively, you can set it up to launch straight into Playnite's "Big Picture" mode.
+
+Here is how to set it up:
+
+1. Identify the Playnite Executable
+Playnite has two different launch modes. For a streaming setup, you usually want the Fullscreen mode:
+
+Path: C:\Users\[YourUser]\AppData\Local\Playnite\Playnite.FullscreenApp.exe
+
+(Note: If you installed the portable version, it will be in the folder where you extracted it.)
+
+2. Add the Application in Apollo
+Open the Apollo Web UI (usually at https://localhost:47990 on your host PC).
+
+Navigate to the Applications tab.
+
+Click Add New.
+
+Fill in the following details:
+
+Application Name: Playnite
+
+Command: Paste the full path to Playnite.FullscreenApp.exe.
+
+Working Directory: The folder where that .exe is located.
+
+Crucial Apollo Setting: Under the application settings, look for the "Always use Virtual Display" toggle and turn it ON. This ensures Apollo creates a virtual monitor that matches your client's resolution (like a Steam Deck or phone) before Playnite opens.
+
+3. (Optional) Automate Syncing
+If you want individual games from Playnite to show up automatically in Apollo without adding them one by one, you can use a plugin:
+
+Sunshine App Export: You can find this in the Playnite Add-ons menu (under Generic). It allows you to select games in Playnite and "export" them directly into Apollo/Sunshine's app list.
+
+PlayNiteWatcher: This is a popular script used by the community to ensure that when you close a game, Apollo automatically ends the stream and cleans up the virtual display.
+
+4. Controller Navigation
+Once you launch Playnite via Apollo, you can use your controller to navigate. If you ever get stuck or a window pops up in the background:
+
+Mouse Mode: On most clients (like Moonlight/Artemis), holding the Start button for 3 seconds toggles mouse emulation so you can click through Windows prompts.
+
+Alt-Tab: On many controllers, holding the Home/Logo button + Start acts as an Alt-Tab command.
+
+Are you setting this up for a specific handheld like a Steam Deck or an Ally, or just streaming to a TV?
+
+You said
+I need
+
+Sunshine App Export: You can find this in the Playnite Add-ons menu (under Generic). It allows you to select games in Playnite and "export" them directly into Apollo/Sunshine's app list.
+
+Gemini said
+To use the Sunshine App Export (also known as the Playnite2Sunshine exporter), you need to install it from the internal Playnite add-on browser. Since you are using Apollo, this plugin works perfectly because Apollo maintains compatibility with Sunshine's application configuration format.
+
+1. Installation
+Open Playnite in Desktop Mode.
+
+Click the Playnite Logo (top left) > Add-ons... (or press F10).
+
+On the left sidebar, select Browse.
+
+Expand the Generic category.
+
+Find Sunshine App Export in the list and click Install.
+
+Click Save at the bottom and restart Playnite when prompted.
+
+2. Initial Configuration
+Once Playnite restarts, you need to tell the plugin where Apollo/Sunshine stores its configuration so it can write the new games to the list.
+
+Go to Add-ons > Extension Settings > Generic > Sunshine App Export.
+
+Locate the Sunshine Configuration Path. Usually, this is:
+
+C:\Program Files\Sunshine\config\apps.json
+
+Note: If you are using the portable version of Apollo/Sunshine, navigate to that specific folder.
+
+Ensure "Export to Sunshine" is enabled.
+
+3. Exporting Your Games
+The plugin doesn't export every game automatically; you choose what you want to see in your streaming menu.
+
+In your Playnite library, Select the games you want to export (use Ctrl + Click or Shift + Click).
+
+Click the Playnite Logo > Extensions > Sunshine App Export > Export selected games.
+
+A success message should appear.
+
+4. Making the Games Appear in Apollo
+Apollo (and Sunshine) usually requires a refresh to "see" the manual changes made to its apps.json file.
+
+Open your Apollo Web UI.
+
+Go to the Troubleshooting tab.
+
+Click Restart Sunshine/Apollo.
+
+Once it reloads, check the Applications tab—your exported games should now be listed there with their respective icons and launch commands.
+
+[!TIP]
+Metadata Requirement: The exporter only works for games that have metadata (specifically a background image/cover and an executable path) already downloaded in Playnite. If a game fails to export, right-click it and select Edit > Download Metadata first.
++1
+
+You said
+how do i add lutris and kodi flatpaks to apollo
+
+Gemini said
+Adding Flatpaks to Apollo (or Sunshine) on Linux is slightly different than adding standard executables because they run in a sandbox. You need to use the flatpak run command or flatpak-spawn depending on how Apollo is installed.
+
+1. Identify the Application IDs
+First, verify the IDs for Lutris and Kodi. Open a terminal and run:
+flatpak list --app
+
+You should see:
+
+Lutris: net.lutris.Lutris
+
+Kodi: tv.kodi.Kodi
+
+2. Configuration in Apollo
+Open your Apollo Web UI (https://localhost:47990) and add the following entries under the Applications tab:
+
+For Lutris
+Application Name: Lutris
+
+Command: flatpak run net.lutris.Lutris
+
+Detached Commands (Optional): If you want to launch a specific game inside Lutris, use:
+flatpak run net.lutris.Lutris lutris:rungameid/1 (Replace 1 with your game's ID).
+
+For Kodi
+Application Name: Kodi
+
+Command: flatpak run tv.kodi.Kodi
+
+3. Important: Apollo as a Flatpak vs. Native
+If you installed Apollo itself as a Flatpak, it cannot "see" other Flatpaks by default due to sandboxing. You have to "break out" of the sandbox using flatpak-spawn:
+
+If Apollo is a Flatpak: Change your command to:
+flatpak-spawn --host flatpak run net.lutris.Lutris
+
+If Apollo is Native (.deb, .rpm, or AppImage): Use the standard flatpak run commands from Step 2.
+
+4. Controller & Permission Fixes
+Sometimes Flatpak apps won't see your Moonlight controller (uinput). If your controller isn't working once the app launches:
+
+Install Flatseal: flatpak install flathub com.github.tchx84.Flatseal
+
+Open Flatseal and select Lutris or Kodi.
+
+Scroll down to Device and ensure All devices (or /dev/uinput) is enabled.
+
+Under Filesystem, you may also need to enable All system files if your games are stored on a secondary drive.
+
+5. Automation Tip (Lutris)
+If you have a massive Lutris library and don't want to add them manually, there is a community script called LutrisToSunshine. It works with Apollo and can automatically pull your entire Lutris library (including Flatpak versions) and generate the apps.json entries with cover art for you.
+
+Are you running Apollo on a Steam Deck or a standard Linux desktop like Ubuntu or Arch?
+
+You said
+Fix
+
+Gemini said
+The issue with your .bat file is that it's attempting to launch a Linux Flatpak via WSL (Windows Subsystem for Linux), but for a graphical application like Kodi to display on your Windows host, your WSL instance needs proper GUI support (WSLg) and environment variables.
+
+To fix this so it works reliably with Apollo, update your script as follows:
+
+Updated Kodi FlatPak.bat
+Code snippet
+@echo off
+:: Launches Kodi via WSL Debian with GUI support
+wsl.exe -d Debian -e sh -c "export DISPLAY=:0 && flatpak run tv.kodi.Kodi"
+Key Improvements:
+The -e Flag: This tells WSL to execute a specific command string directly within the shell.
+
+Environment Variable: Adding export DISPLAY=:0 ensures the Linux app knows where to "draw" the window so it appears on your Windows desktop.
+
+Shell Context: Wrapping the command in sh -c "" ensures that the Flatpak environment paths are correctly initialized.
+
+Important Considerations for Apollo
+Since you are calling this through Apollo, keep these two things in mind:
+
+
+Run from PC: Ensure you are running this setup from the PC where you intend to launch the ISOs or applications, as Apollo requires local execution for its session management.
+
+WSL Status: Make sure your Debian WSL instance is already set up and that you have installed flatpak and tv.kodi.Kodi inside that specific Linux environment. If you haven't, run sudo apt update && sudo apt install flatpak inside the Debian terminal first.
+
+Apollo Command Path: In the Apollo Web UI, you should point the Command field to the full path of this .bat file (e.g., C:\Scripts\Kodi FlatPak.bat).
+
+Does Kodi open into a window for you, or were you hoping to launch it in a full-screen "kiosk" mode?
+
+You said
+can you do this to lutris
+
+Gemini said
+Yes, you can apply the same logic to Lutris. Since you are using a Debian WSL instance and the Flatpak version of Lutris, the command structure remains identical, only changing the application ID.
+
+Updated Lutris FlatPak.bat
+Create a new .bat file (e.g., Lutris FlatPak.bat) and paste the following:
+
+Code snippet
+@echo off
+:: Launches Lutris via WSL Debian with GUI support
+wsl.exe -d Debian -e sh -c "export DISPLAY=:0 && flatpak run net.lutris.Lutris"
+Setup Requirements
+To ensure this works within your Apollo/Sunshine streaming setup:
+
+The Application ID: The standard ID for the Lutris Flatpak is net.lutris.Lutris.
+
+GUI Support (WSLg): This script relies on WSLg, which has been a standard feature in Windows since 2021. It allows Linux GUI applications like Lutris to appear as native Windows windows.
+
+Display Variable: The export DISPLAY=:0 part is crucial as it tells the Linux application which display server to use to render the interface on your Windows host.
+
+Pro Tip for Apollo
+If you want to launch a specific game directly from your Apollo menu instead of just opening the Lutris library, you can create separate .bat files for individual games using this syntax:
+
+Code snippet
+wsl.exe -d Debian -e sh -c "export DISPLAY=:0 && flatpak run net.lutris.Lutris lutris:rungameid/YOUR-GAME-ID"
+(You can find the "Game ID" by right-clicking a game in Lutris and selecting "Configure"—the ID will be listed at the top.)
+
+You said
+Make a lutris and a seperate kodi flatpak Playnight .bat runner
+
+Gemini said
+To integrate your WSL-based Flatpaks into Playnite (and by extension, Apollo), you can create two separate batch files. These scripts ensure that the environment variables are set correctly so the GUI appears on your Windows host.
+
+1. Kodi Flatpak Runner
+Create a file named Kodi_WSL.bat:
+
+Code snippet
+@echo off
+:: Launches Kodi Flatpak via Debian WSL
+wsl.exe -d Debian -e sh -c "export DISPLAY=:0 && flatpak run tv.kodi.Kodi"
+2. Lutris Flatpak Runner
+Create a file named Lutris_WSL.bat:
+
+Code snippet
+@echo off
+:: Launches Lutris Flatpak via Debian WSL
+wsl.exe -d Debian -e sh -c "export DISPLAY=:0 && flatpak run net.lutris.Lutris"
+How to Add These to Playnite
+Since you want these to show up in your Playnite library (and then export them to Apollo), follow these steps:
+
+Add Manually: Open Playnite, click Add Game > Manually...
+
+General Tab: Set the "Name" to Kodi or Lutris.
+
+Installation Tab: * Set the Installation directory to the folder where you saved the .bat files.
+
+In the Executable field, point it to the respective .bat file.
+
+Play Action: Ensure the "Type" is set to File and the path points to your batch file.
+
+Important Notes
+
+Execution Location: Ensure you run these from the PC where the software and ISOs are located.
+
+Apollo Sync: Once added to Playnite, you can use the Sunshine App Export plugin mentioned earlier to sync these "games" directly into your Apollo/Sunshine application list.
+
+WSLg: These scripts assume you are on a version of Windows that supports WSLg (Windows 11 or Windows 10 updated), which handles the graphical bridge automatically once the DISPLAY variable is set.
+
+You said
+where is lutris/kodi flatpaks win 11 executed from
+
+Gemini said
+In Windows 11, Lutris and Kodi Flatpaks are not executed directly from a Windows folder. Instead, they are managed within your WSL2 (Windows Subsystem for Linux) environment, specifically using the flatpak binary inside your Debian instance.
+
+Execution Path Details
+When you run your .bat file, the execution chain looks like this:
+
+Windows Side: The wsl.exe binary (located in C:\Windows\System32\wsl.exe) is called.
+
+WSL Side: It enters your Debian distribution.
+
+Flatpak Binary: It calls the Flatpak manager, typically located at /usr/bin/flatpak within Linux.
+
+Application Data: The actual files for Lutris and Kodi are stored inside the WSL virtual disk (ext4.vhdx), usually at:
+
+System-wide apps: /var/lib/flatpak/app/
+
+User-specific apps: ~/.local/share/flatpak/app/
+
+How the GUI appears on Windows
+Because you are on Windows 11, a feature called WSLg (WSL Graphics Architecture) acts as the bridge. When your script runs export DISPLAY=:0, it tells the Linux application to send its visual data to the hidden Wayland/X11 server running in the background of Windows. This is why Lutris and Kodi appear as standard windows on your desktop rather than staying "trapped" inside a terminal.
+
+Verifying the Path
+If you need to find the exact "binary" inside Debian for any reason, you can open your Debian terminal and type:
+
+which flatpak — shows where the Flatpak manager lives.
+
+flatpak info net.lutris.Lutris — shows the specific installation path and metadata for Lutris.
+
+Summary for Apollo/Playnite: You should continue using the .bat files you created. They act as a "wrapper" that tells Windows to reach into the Linux subsystem and trigger the execution of the Flatpak. Just ensure the .bat files are stored on your local PC where you are running your ISOs and games.

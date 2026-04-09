@@ -1,0 +1,88 @@
+You said
+show full launch_apps.sh
+
+Gemini said
+To ensure every application you have requested is included—and to keep your Apollo/Playnite setup organized—here is the complete, consolidated shell script.
+
+launch_apps.sh
+Save this inside your Debian home directory (e.g., /home/yourusername/launch_apps.sh).
+
+Bash
+#!/bin/bash
+
+# Ensure the DISPLAY variable is set for WSLg GUI support
+export DISPLAY=:0
+
+# Function to show available options
+usage() {
+    echo "Usage: ./launch_apps.sh [app_name]"
+    echo "Available apps: desmume, rmg, dolphin, ppsspp, kodi, lutris, mgba, flatseal"
+}
+
+# Check if an argument was provided
+if [ -z "$1" ]; then
+    usage
+    exit 1
+fi
+
+# Launch the requested application via Flatpak
+case "$1" in
+    desmume)
+        flatpak run org.desmume.DeSmuME
+        ;;
+    rmg)
+        flatpak run com.github.Rosalie241.RMG
+        ;;
+    dolphin)
+        flatpak run org.DolphinEmu.dolphin-emu
+        ;;
+    ppsspp)
+        flatpak run org.ppsspp.PPSSPP
+        ;;
+    kodi)
+        flatpak run tv.kodi.Kodi
+        ;;
+    lutris)
+        flatpak run net.lutris.Lutris
+        ;;
+    mgba)
+        flatpak run io.mgba.mGBA
+        ;;
+    flatseal)
+        flatpak run com.github.tchx84.Flatseal
+        ;;
+    *)
+        echo "Error: Unknown application '$1'"
+        usage
+        exit 1
+        ;;
+esac
+Setup Instructions
+Create/Edit the file:
+In your Debian terminal, run nano ~/launch_apps.sh, paste the code above, then press Ctrl+O, Enter, and Ctrl+X.
+
+Make it executable:
+Run chmod +x ~/launch_apps.sh.
+
+Find your path:
+Type pwd to get your full home directory path (e.g., /home/jdoe/).
+
+How to use this with Windows .bat files
+Now, you can create a single "Template" for your Windows batch files. Just change the last word for each app:
+
+Example (Kodi.bat):
+
+Code snippet
+@echo off
+wsl.exe -d Debian -e /home/grimf/launch_apps.sh kodi
+Example (Lutris.bat):
+
+Code snippet
+@echo off
+wsl.exe -d Debian -e /home/grimf/launch_apps.sh lutris
+Example (Flatseal.bat):
+
+Code snippet
+@echo off
+wsl.exe -d Debian -e /home/grimf/launch_apps.sh flatseal
+This setup is ideal for Apollo and Playnite because if you ever need to add a new emulator or a specific launch argument (like a specific resolution or controller fix), you only need to update this one .sh file inside your WSL environment.

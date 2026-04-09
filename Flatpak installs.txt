@@ -1,0 +1,51 @@
+Gemini said
+Yes, the PPSSPP Flatpak is widely considered the superior choice over the Lutris addon for several reasons. While the Lutris runner often uses outdated internal versions that may lack recent features like native CHD support, the Flatpak is frequently updated with the latest stable releases.
+
+Why the Flatpak is Better
+Up-to-Date Versions: Flatpak versions (such as v1.19+) are maintained regularly, whereas Lutris runners may fetch older versions that lead to library dependency issues.
+
+Direct CHD Support: Recent versions of PPSSPP (starting around v1.17) can load .chd files directly. This means you likely don't need to convert them to ISO at all if your Flatpak is updated.
+
+Performance: On modern hardware, there is virtually no measurable performance difference between Flatpak and native apps (typically less than 1%).
+
+Self-Contained: The Flatpak includes all necessary graphics and system libraries, avoiding the "missing library" errors common when Lutris tries to launch its own PPSSPP runner.
+
+How to use PPSSPP Flatpak with Lutris
+If you still want to use Lutris to organize your library but use the Flatpak for the actual emulation, follow these steps:
+
+Install the Flatpak: flatpak install flathub org.ppsspp.PPSSPP.    JUST EXAMPLE
+
+Configure Lutris:
+
+In Lutris, rather than using the built-in "PPSSPP" runner, right-click your game and select Configure.
+
+Go to Game Options and set the Runner to Linux (Runs native games).
+
+Set the Executable to /usr/bin/flatpak.
+
+In Arguments, enter: run org.ppsspp.PPSSPP "/path/to/your/game.chd".
+
+Runner Flatpak application org.ppsspp.PPSSPP
+sudo ddrescue -d -n /dev/sdb /media/grimf/SSD/failing_drive.img /media/grimf/SSD/rescue.map
+
+~/usr/bin/flatpak manually select
+
+run org.desmume.DeSmuME 
+run com.github.Rosalie241.RMG
+run org.DolphinEmu.dolphin-emu
+run org.ppsspp.PPSSPP
+run tv.kodi.Kodi
+run net.lutris.Lutris
+
+Wsl to Usb!
+wsl --shutdown
+wsl -l -v
+
+@echo off
+:: Launches Lutris via WSL Debian with GUI support
+wsl.exe -d Debian -e sh -c "export DISPLAY=:0 && flatpak run net.lutris.Lutris"
+
+Check drive letter
+wsl --export debian D:\wsl_backup.tar
+wsl --unregister Debian
+wsl --import Debian D:\WSL\Debian D:\wsl_backup.tar
