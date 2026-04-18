@@ -1,0 +1,12 @@
+Crosstini notes put both .sh and this .txt Into "Linux" 
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install gdebi
+sudo apt install dos2unix
+
+dos2unix crostini-install.sh
+sudo chmod +x crostini-install.sh
+dos2unix crostini-flatpak.sh
+sudo chmod +x crostini-flatpak.sh
+
+Install Playnight1052.exe in wine 

@@ -6,18 +6,17 @@ sudo chmod +x Debian-OS-Reinstall.sh
 
 
 1b.WSL is more complete! Put wsl folder and wsl_bkup.tar to root of usb 
-Type  
+Type  CHECK USB LETTER! may not be D:\
 wsl --import debian D:\wsl\debian D:\wsl_backup.tar
-Then To Be Bigshot Grimf-user sudo-1234
-wsl --manage Debian --set-default-user grimf
 
 2.Pass-1234
 dos2unix universal_wsl_reinstall.sh
-sudo chmod +X ./universal_wsl_reinstall.sh
+sudo chmod +x ./universal_wsl_reinstall.sh
+
+dos2unix launch_apps.sh
+sudo chmod +x ./launch_apps.sh
 
 ./apollo.bat
-
-sudo apt install gdebi
 
 sudo gdebi lutris_0.5.22_all.deb
 
