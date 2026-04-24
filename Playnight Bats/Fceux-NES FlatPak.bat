@@ -1,0 +1,3 @@
+@echo off
+:: Launches Fceux via WSL Debian with GUI support
+wsl.exe -d Debian -e sh -c "flatpak run com.fceux.FCEUX"
