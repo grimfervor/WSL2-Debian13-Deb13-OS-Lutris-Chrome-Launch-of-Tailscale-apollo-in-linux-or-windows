@@ -1,0 +1,189 @@
+Tailscale is one of the easiest ways to set up a private network (a "Tailnet") because it handles all the complex routing and security for you. It essentially makes your devices act like they are on the same local Wi-Fi, even if one is at home and the other is on a mobile hotspot across the country.
+
+1. Create an Account
+Go to Tailscale.com and sign up using a Google, Microsoft, or GitHub account.
+
+Once logged in, you will be taken to your admin console (the "Tailnet"), which will be empty at first.
+
+2. Install on Your Main PC (The Host)
+Since you've been working with Apollo/Sunshine, you'll want to install Tailscale on that machine first.
+
+Windows: Download the .msi installer from their site. Once installed, log in through the browser pop-up.
+
+Linux (Crostini/Ubuntu/WSL): Run the one-line installation script:
+
+Bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+ChromeOS: You can install the Tailscale Android app from the Play Store, which will protect the entire Chromebook.
+
+3. Install on Your Client Device
+Install Tailscale on the device you plan to play games from (phone, tablet, or another laptop). Log in with the same account.
+
+4. Connect and Get Your "Tailscale IP"
+Once both devices are logged in:
+
+Open the Tailscale app or the admin console.
+
+You will see a new IP address for each device (usually starting with 100.x.y.z).
+
+This is your permanent private IP. ### 5. Using it with Apollo/Moonlight
+Instead of using your home's public IP address (which changes and requires port forwarding), simply:
+
+Open Moonlight on your client device.
+
+Click "Add PC manually."
+
+Enter the Tailscale IP of your Apollo host.
+
+It should connect instantly, bypassing any router firewalls or NAT issues.
+
+Why this is better for your setup:
+Zero Port Forwarding: You don't need to touch your router settings or open those ports we discussed earlier to the public internet.
+
+Encrypted: The stream is wrapped in a WireGuard® tunnel, making it much more secure than standard port forwarding.
+
+Stability: Your Tailscale IP stays the same even if you move your PC to a different house or network.
+
+If you are trying to reach the Apollo Web UI (the dashboard) or stream games from your Windows machine and getting a "Connection Refused" or "Site cannot be reached" error, it usually boils down to the service status or a firewall block.
+
+Since Apollo is a fork of Sunshine, the troubleshooting steps are nearly identical.
+
+1. Check if the Apollo Service is Running
+If the backend service isn't active, the port won't be open.
+
+Open your Task Manager (Ctrl + Shift + Esc).
+
+Go to the Details tab and look for apollo.exe or sunshine.exe.
+
+If you don't see it, try launching Apollo manually from your Start Menu.
+
+Pro Tip: If it crashes immediately, check the logs in C:\Program Files\Apollo\config\sunshine.log (or wherever you installed it).
+
+2. The Browser Security "Gotcha"
+Because Apollo uses a self-signed certificate for security, Windows/Chrome will often try to block you.
+
+In your browser, go to: https://localhost:47990
+
+Note: You must use https, not http.
+
+If you see a "Your connection is not private" warning, click Advanced and then click "Proceed to localhost (unsafe)".
+
+3. Open the Windows Firewall
+Windows Defender often blocks the specific ports Apollo needs to talk to your network.
+
+Search for "Windows Defender Firewall with Advanced Security" in the Start Menu.
+
+Click Inbound Rules > New Rule.
+
+Select Port > TCP.
+
+Enter the specific ports: 47984, 47989, 47990, 48010.
+
+Select Allow the connection and name it "Apollo TCP".
+
+Repeat the steps for UDP using these ports: 47998, 47999, 48000, 48002, 48010.
+
+4. Are you using a VPN or Tailscale?
+If you just set up Tailscale as we discussed:
+
+Try accessing the UI via your Tailscale IP instead of localhost (e.g., https://100.x.y.z:47990).
+
+Ensure the "Tailscale" interface is set to Private and not "Public" in Windows Network Settings, otherwise the firewall will be stricter.
+
+5. Check for Port Conflicts
+If another app is using port 47990, Apollo won't start.
+
+Open Command Prompt (as Admin).
+
+Type: netstat -ano | findstr :47990
+
+If a line appears, the number at the very end is the PID (Process ID) of the app stealing the port. You can find that PID in Task Manager to see what it is.
+
+To reach the Apollo Web UI or stream games via Tailscale, you essentially swap your local localhost or internal IP for the Tailscale IP assigned to your host machine.
+
+1. Get your Tailscale IP
+On your Apollo Host PC, click the Tailscale icon in the system tray.
+
+Note the IP address (it will start with 100.x.y.z).
+
+Alternatively, run tailscale status in a command prompt/terminal.
+
+2. Accessing the Web UI (The Dashboard)
+From any other device (phone, laptop, etc.) that is also logged into your Tailscale account:
+
+Open your browser.
+
+Type: https://[Your-Tailscale-IP]:47990
+
+Warning: You will likely see a "Your connection is not private" message. Click Advanced and then Proceed to [IP] (unsafe). This happens because Apollo uses a self-signed certificate.
+
+3. Connecting with Moonlight
+If you are trying to play games remotely:
+
+Open the Moonlight app on your client device.
+
+Tap the Add PC icon (usually a + or a computer icon).
+
+Enter your Tailscale IP (the 100.x.y.z address).
+
+Apollo will generate a PIN. Switch to the Apollo Web UI on your host PC and enter that PIN to pair the devices.
+
+Troubleshooting "Connection Refused" over Tailscale
+If you have Tailscale running on both devices but still can't reach the UI, check these two things:
+
+Apollo "Listen" Settings: By default, Apollo (and Sunshine) listens on all network interfaces. However, if you've restricted it in the settings, go to the Network tab in the Apollo UI (locally) and ensure "Network Interfaces" is either blank or specifically includes your Tailscale adapter.
+
+Windows Firewall (The Most Likely Culprit):
+Windows Firewall often treats the Tailscale connection as a "Public" or "Unidentified" network, which is much more restrictive.
+
+Open Windows Defender Firewall with Advanced Security.
+
+Find the Inbound Rule you created for Apollo.
+
+Double-click it and ensure it is applied to all profiles (Domain, Private, and Public).
+
+Pro Tip: Tailscale MagicDNS
+
+If you have MagicDNS enabled in your Tailscale admin console, you don't even need the IP. You can just type:
+https://[Your-PC-Name]:47990 (e.g., https://gaming-desktop:47990).
+
+Are you able to ping the Tailscale IP of your host machine from your client device?
+
+MagicDNS is a feature that automatically assigns easy-to-remember domain names (like gaming-pc) to your devices so you don't have to keep track of 100.x.y.z IP addresses.
+
+1. Enable MagicDNS in the Admin Console
+Open the Tailscale Admin Console.
+
+Go to the DNS tab.
+
+Scroll down to the MagicDNS section and click Enable MagicDNS.
+
+Note: Tailscale may prompt you to add "Global Nameservers" first (like Google 8.8.8.8 or Cloudflare 1.1.1.1) if you haven't set any up yet. This is required so your devices can still reach the regular internet.
+
+2. Verify on Your Windows Host
+Once enabled in the console, your Windows machine should automatically start recognizing Tailscale names.
+
+Open Command Prompt.
+
+Type tailscale status.
+
+You will see your devices listed with their names (e.g., desktop-l92j).
+
+Try to "ping" your own machine name to see if it resolves: ping [machine-name].
+
+3. Reach Apollo Using the Name
+Now, instead of using the IP, you can access your Apollo dashboard from any device on your Tailnet by typing this into your browser:
+
+https://[machine-name]:47990
+
+Pro Tip: If your machine name is something messy like desktop-8f23k9, you can change it! In the Machines tab of the Tailscale Admin Console, click the three dots ... next to your PC and select Edit machine name. This makes it much easier to type on a phone or tablet.
+
+Troubleshooting MagicDNS
+If it’s enabled but you still can't reach https://[machine-name]:47990:
+
+Check "Tailscale DNS" settings: On Windows, right-click the Tailscale icon in the tray, go to Preferences, and ensure Use Tailscale DNS Settings is checked.
+
+Browser Cache: Sometimes browsers try to search Google for the name instead of treating it as a URL. Try adding a trailing slash: https://gaming-pc:47990/.
+
+HTTPS Warning: MagicDNS doesn't remove the "Your connection is not private" warning in Apollo. You still need to click Advanced > Proceed because Apollo's certificate is tied to the internal server, not the Tailscale name.

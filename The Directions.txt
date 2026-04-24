@@ -1,0 +1,54 @@
+https://archive.org/details/iagl-kit-unzip-to-sdcard
+
+1.Put Debian On OLD computers w/o Virtualization... 
+sudo apt update
+sudo apt upgrade
+sudo apt install dos2unix
+dos2unix Trixie_Debian_OS_Reinstall.sh
+sudo chmod +x ./Trixie_Debian_OS_Reinstall.sh
+sudo ./Trixie_Debian_OS_Reinstall.sh
+dos2unix launch_apps.sh
+sudo chmod +x ./launch_apps.sh
+sudo ./launch_apps.sh
+winecfg
+sudo apt install winetricks
+install Lutris Playnight in Wine and cast!
+
+2.WSL is more complete! Put wsl folder and wsl_bkup.tar to root of usb 
+Type  CHECK USB LETTER! may not be D:\
+Name-grimf Pass-1234 WSL USB!!!!
+wsl --import debian E:\wsl\debian E:\wsl_backup.tar
+wsl --manage Debian --set-default-user grimf
+wsl -d debian
+dos2unix universal_wsl_reinstall.sh
+sudo chmod +x ./universal_wsl_reinstall.sh
+sudo ./universal_wsl_reinstall.sh
+dos2unix flat-install.sh
+sudo chmod +x ./flat-install.sh 
+sudo ./flat-install.sh
+./apollo.bat
+sudo gdebi jdk-17.0.12_linux-x64_bin.deb
+goto Power Ranger 5 Game Mod Section Free Tlauncher Setup Use free account to get mods or open folder and dump then reset!
+Tlauncher.jar is executable for Playnight use Jdk 1st!
+For Complete Reset bkup
+wsl --export debian E:\wsl_backup.tar
+Use playnight!
+
+3.For Chromebook Goto g for apps, goto about, turn on Linux 30 GB & or dev mode 
+sudo apt update
+sudo apt upgrade
+sudo apt install dos2unix
+dos2unix Crostini-install.sh
+sudo chmod +x ./Crostini-install.sh
+sudo ./Crostini-install.sh
+dos2unix Crostini-flatpak.sh
+sudo chmod +x ./Crostini-flatpak.sh
+sudo ./Crostini-flatpak.sh
+winecfg
+sudo apt update
+sudo apt upgrade -y
+sudo apt install gdebi -y
+sudo gdebi jdk-17.0.12_linux-x64_bin.deb
+sudo gdebi sunshine-debian-trixie-amd64.deb
+lutris
+Install playnight in wine Use playnight in sunshine!

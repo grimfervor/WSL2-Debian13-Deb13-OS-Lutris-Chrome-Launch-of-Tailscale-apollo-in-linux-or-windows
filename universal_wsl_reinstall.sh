@@ -46,11 +46,10 @@ sudo apt install -y flatpak
 flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak update -y
 
-echo "Installing Kodi, Lutris, and Flatseal via Flatpak..."
+echo "Installing Kodi via Flatpak..."
 # Note: Corrected Kodi ID to tv.kodi.Kodi
 flatpak install -y flathub tv.kodi.Kodi
-flatpak install -y flathub net.lutris.Lutris
-flatpak install -y flathub com.github.tchx84.Flatseal
+
 
 # 4. The Universal Hardware Trick (NVIDIA Detection)
 echo "Analyzing GPU hardware..."
@@ -67,10 +66,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt install -y \
     libgl1-mesa-dri libgl1-mesa-dri:i386 \
     mesa-vulkan-drivers mesa-vulkan-drivers:i386 \
     intel-media-va-driver-non-free \
-    winehq-staging retroarch dolphin-emu mupen64plus-ui-console \
+    winehq-staging retroarch dolphin-emu \
     antimicrox \
     zram-tools python3-pil python3-lxml git usbutils \
-    pipewire-audio-client-libraries libpulse0 alsa-utils pulseaudio-utils
+    pipewire-audio-client-libraries libpulse0 alsa-utils pulseaudio-utils 
 
 # 6. Other AppImages
 echo "Organizing Emulators..."

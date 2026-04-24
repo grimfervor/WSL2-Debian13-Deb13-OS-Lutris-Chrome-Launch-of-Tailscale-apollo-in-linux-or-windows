@@ -16,7 +16,7 @@ export DISPLAY=:0
 # Function to show available options
 usage() {
     echo "Usage: ./launch_apps.sh [app_name]"
-    echo "Available apps: desmume, rmg, dolphin, ppsspp, kodi, lutris, mgba, flatseal, xemu, pcsx2, snes9x, genesis, nes, duckstation"
+    echo "Available apps: desmume, rmg, dolphin, ppsspp, kodi, mgba"
 }
 
 # Check if an argument was provided
@@ -42,32 +42,8 @@ case "$1" in
     kodi)
         flatpak run tv.kodi.Kodi
         ;;
-    lutris)
-        flatpak run net.lutris.Lutris
-        ;;
     mgba)
         flatpak run io.mgba.mGBA
-        ;;
-    flatseal)
-        flatpak run com.github.tchx84.Flatseal
-        ;;
-    xemu)
-        flatpak run app.xemu.xemu
-        ;;
-    pcsx2)
-        flatpak run net.pcsx2.PCSX2
-        ;;
-    snes9x)
-        flatpak run com.snes9x.Snes9x
-        ;;
-    genesis)
-        flatpak run org.bannister.GenesisPlus
-        ;;
-    nes)
-        flatpak run com.fceux.FCEUX
-        ;;
-    duckstation)
-        flatpak run org.duckstation.DuckStation
         ;;
     *)
         echo "Error: Unknown application '$1'"
@@ -75,7 +51,6 @@ case "$1" in
         exit 1
         ;;
 esac
-
 Setup Instructions
 Create/Edit the file:
 In your Debian terminal, run nano ~/launch_apps.sh, paste the code above, then press Ctrl+O, Enter, and Ctrl+X.

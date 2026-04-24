@@ -1,11 +1,11 @@
---2026-03-22 11:11:19--  https://dl.winehq.org/wine-builds/winehq.key
-Resolving dl.winehq.org (dl.winehq.org)... 151.101.2.217, 151.101.130.217, 151.101.194.217, ...
-Connecting to dl.winehq.org (dl.winehq.org)|151.101.2.217|:443... connected.
+--2026-04-22 10:15:58--  https://dl.winehq.org/wine-builds/winehq.key
+Resolving dl.winehq.org (dl.winehq.org)... 151.101.46.217, 2a04:4e42:56::729
+Connecting to dl.winehq.org (dl.winehq.org)|151.101.46.217|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 3212 (3.1K) [application/pgp-keys]
 Saving to: ‘/etc/apt/keyrings/winehq-archive.key’
 
-     0K ...                                                   100% 1.26M=0.002s
+     0K ...                                                   100% 1.13M=0.003s
 
-2026-03-22 11:11:19 (1.26 MB/s) - ‘/etc/apt/keyrings/winehq-archive.key’ saved [3212/3212]
+2026-04-22 10:15:58 (1.13 MB/s) - ‘/etc/apt/keyrings/winehq-archive.key’ saved [3212/3212]
 

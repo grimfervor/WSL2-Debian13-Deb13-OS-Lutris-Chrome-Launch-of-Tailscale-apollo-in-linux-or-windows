@@ -1,0 +1,58 @@
+To "enter" Playnite into Apollo, you are essentially telling Apollo to launch Playnite's Fullscreen Mode as a "game." This gives you a console-like interface to navigate all your emulators and games using a controller.
+
+Since you've been setting up WSL-based Flatpaks, adding Playnite acts as the "Home Screen" that pulls everything together.
+
+1. Locate the Playnite Fullscreen Executable
+You need the specific "Fullscreen" version of the app for the best experience.
+
+Path: C:\Users\[YourUsername]\AppData\Local\Playnite\Playnite.FullscreenApp.exe
+
+(If you used a portable install, it will be in that specific folder instead.)
+
+2. Add Playnite via the Apollo Web UI
+Open your Apollo Web UI (https://localhost:47990).
+
+Go to the Applications tab.
+
+Click Add New and fill it out:
+
+Application Name: Playnite
+
+Command: C:\Users\[YourUsername]\AppData\Local\Playnite\Playnite.FullscreenApp.exe
+
+Working Directory: C:\Users\[YourUsername]\AppData\Local\Playnite\
+
+Display Settings: Scroll down and ensure "Always use Virtual Display" is checked. This allows Apollo to resize the screen to match your handheld or TV resolution before Playnite opens.
+
+Click Save.
+
+3. Link your Flatpaks inside Playnite
+Since you have your .bat files for Kodi, Lutris, and the emulators (mGBA, Dolphin, etc.):
+
+Open Playnite on your desktop.
+
+Click Add Game > Manually.
+
+Point the Play Action to your respective .bat files.
+
+Now, when you launch Playnite from Apollo, you can select "Kodi" or "Dolphin" inside Playnite, and it will trigger the WSL command to start the Flatpak.
+
+4. Optional: Use the "Sunshine App Export" (ApolloSync)
+If you don't want to manually add every single game to the Apollo Web UI, use the plugin we discussed earlier:
+
+In Playnite, go to Add-ons > Generic > Sunshine App Export.
+
+Set the path to your apps.json (usually C:\Program Files\Sunshine\config\apps.json).
+
+Select your games in Playnite, go to Extensions > Sunshine App Export > Export Selected.
+
+Restart Apollo via the Troubleshooting tab.
+
+5. Final Workflow
+On your Client (Moonlight): Open the "Playnite" app.
+
+Inside Playnite: Use your controller to pick a game (e.g., mGBA).
+
+The Result: Apollo executes the .bat, which triggers WSL, which launches the Flatpak—all while managing the virtual display and controller input for you.
+
+One tip: If you find the Windows Taskbar stays visible, go to Playnite's Settings > Appearance > Fullscreen and check "Hide Taskbar."
